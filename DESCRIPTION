@@ -9,8 +9,8 @@ Authors@R: c(person("Youngseok","Kim",role=c("aut","cre"),
              person("Peter","Carbonetto",role="aut",
                     email="peter.carbonetto@gmail.com"),
              person("Matthew","Stephens",role="aut"))
-URL: https://github.com/stephenslab/mr.ash.alpha
-BugReports: https://github.com/stephenslab/mr.ash.alpha/issues
+URL: https://github.com/alexmccreight/mr.ash.alpha
+BugReports: https://github.com/alexmccreight/mr.ash.alpha/issues
 Description: Implements variational empirical Bayes methods for linear
     regression. Coordinate-wise optimization algorithms for model fitting
     are implemented in C++ for efficient handling of large-scale data
