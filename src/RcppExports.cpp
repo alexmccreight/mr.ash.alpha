@@ -12,8 +12,8 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
 // caisa_rcpp
-Rcpp::List caisa_rcpp(const arma::mat& X, const arma::vec& y, const arma::vec& w, const arma::vec& sa2, arma::vec& pi, arma::vec& beta, arma::vec& r, double sigma2, const arma::uvec& o, int maxiter, int miniter, double convtol, double epstol, std::string method_q, bool updatepi, bool updatesigma, bool verbose);
-RcppExport SEXP _mr_ash_alpha_caisa_rcpp(SEXP XSEXP, SEXP ySEXP, SEXP wSEXP, SEXP sa2SEXP, SEXP piSEXP, SEXP betaSEXP, SEXP rSEXP, SEXP sigma2SEXP, SEXP oSEXP, SEXP maxiterSEXP, SEXP miniterSEXP, SEXP convtolSEXP, SEXP epstolSEXP, SEXP method_qSEXP, SEXP updatepiSEXP, SEXP updatesigmaSEXP, SEXP verboseSEXP) {
+Rcpp::List caisa_rcpp(const arma::mat& X, const arma::vec& y, const arma::vec& w, const arma::vec& sa2, arma::vec& pi, arma::vec& beta, arma::vec& r, double sigma2, const arma::uvec& o, int maxiter, int miniter, double convtol, double epstol, std::string method_q, bool updatepi, bool updatesigma, bool verbose, const arma::mat& XtOmega, double tausq, double sum_Dsq, const arma::mat& V, const arma::vec& Dsq, const arma::mat& VtXt);
+RcppExport SEXP _mr_ash_alpha_caisa_rcpp(SEXP XSEXP, SEXP ySEXP, SEXP wSEXP, SEXP sa2SEXP, SEXP piSEXP, SEXP betaSEXP, SEXP rSEXP, SEXP sigma2SEXP, SEXP oSEXP, SEXP maxiterSEXP, SEXP miniterSEXP, SEXP convtolSEXP, SEXP epstolSEXP, SEXP method_qSEXP, SEXP updatepiSEXP, SEXP updatesigmaSEXP, SEXP verboseSEXP, SEXP XtOmegaSEXP, SEXP tausqSEXP, SEXP sum_DsqSEXP, SEXP VSEXP, SEXP DsqSEXP, SEXP VtXtSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -34,7 +34,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< bool >::type updatepi(updatepiSEXP);
     Rcpp::traits::input_parameter< bool >::type updatesigma(updatesigmaSEXP);
     Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
-    rcpp_result_gen = Rcpp::wrap(caisa_rcpp(X, y, w, sa2, pi, beta, r, sigma2, o, maxiter, miniter, convtol, epstol, method_q, updatepi, updatesigma, verbose));
+    Rcpp::traits::input_parameter< const arma::mat& >::type XtOmega(XtOmegaSEXP);
+    Rcpp::traits::input_parameter< double >::type tausq(tausqSEXP);
+    Rcpp::traits::input_parameter< double >::type sum_Dsq(sum_DsqSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type V(VSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type Dsq(DsqSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type VtXt(VtXtSEXP);
+    rcpp_result_gen = Rcpp::wrap(caisa_rcpp(X, y, w, sa2, pi, beta, r, sigma2, o, maxiter, miniter, convtol, epstol, method_q, updatepi, updatesigma, verbose, XtOmega, tausq, sum_Dsq, V, Dsq, VtXt));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -52,7 +58,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_mr_ash_alpha_caisa_rcpp", (DL_FUNC) &_mr_ash_alpha_caisa_rcpp, 17},
+    {"_mr_ash_alpha_caisa_rcpp", (DL_FUNC) &_mr_ash_alpha_caisa_rcpp, 23},
     {"_mr_ash_alpha_random_order", (DL_FUNC) &_mr_ash_alpha_random_order, 2},
     {NULL, NULL, 0}
 };
