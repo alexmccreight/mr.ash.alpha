@@ -10,7 +10,7 @@
 // [[Rcpp::depends(RcppArmadillo)]]
 //
 
-// This is 
+// This is
 // [[Rcpp::export]]
 arma::uvec random_order (int p, int numiter) {
   arma::uvec o(p * numiter);
@@ -20,7 +20,7 @@ arma::uvec random_order (int p, int numiter) {
   return o;
 }
 
-// This is 
+// This is
 arma::mat outerAddition   (const arma::vec& a, const arma::vec& b) {
   arma::mat A(a.n_elem, b.n_elem);
   A.fill(0);
@@ -37,38 +37,56 @@ void updatebetaj       (const arma::vec& xj, double wj,
                         const arma::vec& s2inv,
                         double& a1, double& a2,
                         int j, int p,
-                        double epstol) {
-  
-  // calculate b
-  double bjwj           = dot(r, xj) + betaj * wj;
-  
+                        double epstol,
+                        const arma::vec& xtomegaj,
+                        arma::vec& phij, // Added as reference parameter
+                        arma::vec& muj,
+                        arma::vec& post_var,
+                        double bjj) { //CHAGED! -- double --> const (A)
+
+  // calculate b (CHANGED!)
+  double bj           = dot(r, xtomegaj) * wj + betaj ; // bj = scalar
+
   // update r first step
-  r                    += xj * betaj; 
-  
-  // calculate muj
-  arma::vec muj         = bjwj * s2inv;
+  r                    += xj * betaj ;
+
+  // calculate muj (CHANGED!)
+  //arma::vec muj         = bj * sa2 * s2inv;
+  muj = bj * (sa2 % s2inv);  //CHAT CODE CHANGE, muj = K-vector
   muj(0)                = 0;
-  
+
+  // CHANGED!!
+  post_var = wj * (sa2 % s2inv);
+  post_var(0) = 0;
+  bjj = bj;
+
   // calculate phij
-  arma::vec phij        = log(piold + epstol) - log(1 + sa2 * wj)/2 + muj * (bjwj / 2 / sigma2);
+  phij        = log(piold + epstol) - log(s2inv)/2 - (bj * bj * s2inv / 2 );
+
+  // arma::vec phij = log(piold + epstol)
+  //   + 0.5 * log(s2inv)            // elementwise log(s2inv)
+  //   - 0.5 * (bj * bj) * s2inv; //CHAT CODE CHANGE
+
   phij                  = exp(phij - max(phij));
+  //phij /= arma::accu(phij); //CHAT CODE CHANGE
   phij                  = phij / sum(phij);
-  
+
+
   // pinew
   pi                   += phij / p;
-  
+
   // update betaj
-  betaj                 = dot(phij, muj);
-  
+  betaj                 = arma::dot(phij, muj);
+
   // update r second step
   r                    += -xj * betaj;
-  
+
   // precalculate for M-step
-  a1                   += bjwj * betaj;
+  a1                   += dot(phij, (muj % muj) + wj * (sa2 % s2inv)); //CHANGED!!!
   a2                   += dot(phij, log(phij + epstol));
   phij(0)               = 0;
   a2                   += -dot(phij, log(s2inv)) / 2;
-  
+
   return;
 }
 
