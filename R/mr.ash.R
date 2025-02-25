@@ -168,7 +168,7 @@
 #' Y. Kim (2020), Bayesian shrinkage methods for high dimensional
 #' regression. Ph.D. thesis, University of Chicago.
 #'
-#' @useDynLib mr.ash.alpha
+#' @useDynLib mr.ash.alpha.mccreight
 #'
 #' @importFrom utils modifyList
 #' @importFrom Rcpp evalCpp
@@ -274,6 +274,7 @@ mr.ash                      = function(X, y, Z = NULL, sa2 = NULL,
   # precompute x_j^T x_j
   # w = colSums(data$X^2) #CHANGED!
   w = 1/diagXtOmegaX
+  #w = diagXtOmegaX #AAAAA
   data$w  = w
 
   # set sa2 if missing

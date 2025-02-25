@@ -2,10 +2,10 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 caisa_rcpp <- function(X, y, w, sa2, pi, beta, r, sigma2, o, maxiter, miniter, convtol, epstol, method_q, updatepi, updatesigma, verbose, XtOmega, tausq, sum_Dsq, V, Dsq, VtXt) {
-    .Call('_mr_ash_alpha_caisa_rcpp', PACKAGE = 'mr.ash.alpha', X, y, w, sa2, pi, beta, r, sigma2, o, maxiter, miniter, convtol, epstol, method_q, updatepi, updatesigma, verbose, XtOmega, tausq, sum_Dsq, V, Dsq, VtXt)
+    .Call('_mr_ash_alpha_caisa_rcpp', PACKAGE = 'mr.ash.alpha.mccreight', X, y, w, sa2, pi, beta, r, sigma2, o, maxiter, miniter, convtol, epstol, method_q, updatepi, updatesigma, verbose, XtOmega, tausq, sum_Dsq, V, Dsq, VtXt)
 }
 
 random_order <- function(p, numiter) {
-    .Call('_mr_ash_alpha_random_order', PACKAGE = 'mr.ash.alpha', p, numiter)
+    .Call('_mr_ash_alpha_random_order', PACKAGE = 'mr.ash.alpha.mccreight', p, numiter)
 }
 
