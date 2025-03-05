@@ -61,7 +61,7 @@ void updatebetaj       (const arma::vec& xj, double wj,
   bjj = bj;
 
   // calculate phij
-  phij        = log(piold + epstol) - log(s2inv)/2 - (bj * bj * s2inv / 2 );
+  phij        = log(piold + epstol) + log(s2inv)/2 - (bj * bj * s2inv / 2 );
 
   // arma::vec phij = log(piold + epstol)
   //   + 0.5 * log(s2inv)            // elementwise log(s2inv)

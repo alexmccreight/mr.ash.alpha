@@ -49,6 +49,7 @@ Rcpp::List caisa_rcpp       (const arma::mat& X, const arma::vec& y,
   // PRECALCULATE
   // ---------------------------------------------------------------------
   arma::mat S2inv        = 1 / outerAddition(sa2, w); //CHAGED 1 / outerAddition(1/sa2, w)
+  //arma::mat S2inv        = 1 / outerAddition(sa2, w); ///AAAAA
   S2inv.row(0).fill(epstol);
 
   //CHANGED (added XtOmegat before main loop)
