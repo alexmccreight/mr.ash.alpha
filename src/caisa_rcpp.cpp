@@ -40,7 +40,7 @@ Rcpp::List caisa_rcpp       (const arma::mat& X, const arma::vec& y,
   // PRECALCULATE
   // ---------------------------------------------------------------------
   arma::mat S2inv        = 1 / outerAddition(1/sa2, w);
-  S2inv.row(0).fill(epstol);
+  //S2inv.row(0).fill(epstol);
   
   // ---------------------------------------------------------------------
   // START LOOP : CYCLE THROUGH COORDINATE ASCENT UPDATES
@@ -92,9 +92,11 @@ Rcpp::List caisa_rcpp       (const arma::mat& X, const arma::vec& y,
     varobj(iter)          = varobj(iter) / sigma2 / 2.0 +
                             log(2.0 * M_PI * sigma2) / 2.0 * n -
                             dot(pi, log(piold + epstol)) * p + a2;
-    
-    for (j = 1; j < K; j++){
-      varobj(iter)       += pi(j) * log(sa2(j)) * p / 2;
+
+    for (j = 0; j < K; j++){
+      if (sa2(j) > 0) {
+        varobj(iter)       += pi(j) * log(sa2(j)) * p / 2;
+      }
     }
     
     if (!updatepi) {

@@ -47,7 +47,7 @@ void updatebetaj       (const arma::vec& xj, double wj,
   
   // calculate muj
   arma::vec muj         = bjwj * s2inv;
-  muj(0)                = 0;
+  //muj(0)                = 0;
   
   // calculate phij
   arma::vec phij        = log(piold + epstol) - log(1 + sa2 * wj)/2 + muj * (bjwj / 2 / sigma2);
@@ -66,8 +66,12 @@ void updatebetaj       (const arma::vec& xj, double wj,
   // precalculate for M-step
   a1                   += bjwj * betaj;
   a2                   += dot(phij, log(phij + epstol));
-  phij(0)               = 0;
-  a2                   += -dot(phij, log(s2inv)) / 2;
+  //phij(0)               = 0;
+  arma::vec phij_nonzero = phij;
+  for (int k = 0; k < phij.n_elem; k++) {
+    if (sa2(k) == 0) phij_nonzero(k) = 0;
+  }
+  a2                   += -dot(phij_nonzero, log(s2inv)) / 2;
   
   return;
 }

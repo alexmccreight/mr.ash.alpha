@@ -223,9 +223,9 @@ mr.ash                      = function(X, y, Z = NULL, sa2 = NULL,
     if (any(sa2 < 0)) {
       stop ("all the mixture component variances must be non-negative.")
     }
-    if (sa2[1] != 0) {
-      stop ("the first mixture component variance sa2[1] must be 0.")
-    }
+    #if (sa2[1] != 0) {
+    #  stop ("the first mixture component variance sa2[1] must be 0.")
+    #}
   }
   
   # check Z
